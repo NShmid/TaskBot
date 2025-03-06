@@ -4,7 +4,7 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
 from filters.admin_filter import IsAdmin
-from utils.google_sheets import responsible_id, chat_id
+from utils.google_sheets import responsible_id, chat_id, set_image_id
 
 admin_router = Router()
 
@@ -29,7 +29,7 @@ async def start_cmd_admin(message: types.Message, state: FSMContext):
 @admin_router.message(IsAdmin(), TaskForm.image)
 async def add_image(message: types.Message, state: FSMContext):
     if message.photo:
-        print("Картинка сохранена.\n Теперь введи текст тз.")
+        await message.answer("Картинка сохранена.\n Теперь введи текст тз.")
         await state.update_data(image=message.photo[-1].file_id)
         await state.set_state(TaskForm.text)
     elif message.text and message.text.lower() == 'нет':
@@ -90,7 +90,8 @@ async def add_chat(message: types.Message, state: FSMContext):
 @admin_router.message(IsAdmin(), TaskForm.confirm)
 async def confirm(message: types.Message, state: FSMContext):
     if message.text.lower() == 'отправить':
-        # Сохранить информацию в бд и отправить тз в чат
+        data = await state.get_data()
+        set_image_id(data.get("image"))
         await message.answer("Тз успешно отправлено!")
         await state.clear()
     else:
