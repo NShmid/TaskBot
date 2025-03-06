@@ -1,6 +1,7 @@
 from aiogram.filters import BaseFilter
 from aiogram.types import Message
-from utils.google_sheets import admins_id
+
+from bot.utils.google_sheets import admins_id
 
 
 class IsAdmin(BaseFilter):
