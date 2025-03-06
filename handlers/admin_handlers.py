@@ -21,7 +21,7 @@ class TaskForm(StatesGroup):
 @admin_router.message(Command("start"), IsAdmin(), StateFilter(None))
 async def start_cmd_admin(message: types.Message, state: FSMContext):
     await message.answer(f"Привет, {message.from_user.first_name}! У тебя есть права "
-                         f"администратора.\nЧтобы начать создание тз отправь картинку"
+                         f"администратора.\nЧтобы начать создание тз отправь картинку "
                          f"или напиши \'нет\'")
     await state.set_state(TaskForm.image)
     
@@ -49,7 +49,7 @@ async def add_text(message: types.Message, state: FSMContext):
         await state.set_state(TaskForm.responsible)
     else:
         await message.answer(f"Введи текст для тз. Для возврата на предыдущий шаг введи \'назад\'"
-                             f"(для отмены создания тз напиши \'отмена\').")
+                             f" (для отмены создания тз напиши \'отмена\').")
         
 
 @admin_router.message(IsAdmin(), TaskForm.responsible)
@@ -60,7 +60,7 @@ async def add_responsible(message: types.Message, state: FSMContext):
         await state.set_state(TaskForm.deadline)
     else:
         await message.answer(f"Введи id ответственного из списка. Для возврата на предыдущий шаг"
-                             f"введи \'назад\' (для отмены создания тз напиши \'отмена\').")
+                             f" введи \'назад\' (для отмены создания тз напиши \'отмена\').")
 
 
 @admin_router.message(IsAdmin(), TaskForm.deadline)
@@ -71,7 +71,7 @@ async def add_deadline(message: types.Message, state: FSMContext):
         await state.set_state(TaskForm.chat)
     else:
         await message.answer(f"Введи дедлайн текстом. Для возврата на предыдущий шаг введи"
-                             f"\'назад\' (для отмены создания тз напиши \'отмена\').")
+                             f" \'назад\' (для отмены создания тз напиши \'отмена\').")
 
 
 @admin_router.message(IsAdmin(), TaskForm.chat)
@@ -80,11 +80,11 @@ async def add_chat(message: types.Message, state: FSMContext):
         await state.update_data(chat=message.text)
         data = await state.get_data()
         await message.answer(f"Чат выбран. Проверим тз: {str(data)} \nЕсли тз верно, введи"
-                             f"\'отправить\'.")
+                             f" \'отправить\'.")
         await state.set_state(TaskForm.confirm)
     else:
         await message.answer(f"Введи чат из списка. Для возврата на предыдущий шаг введи "
-                             f"\'назад\' (для отмены создания тз напиши \'отмена\').")
+                             f" \'назад\' (для отмены создания тз напиши \'отмена\').")
 
 
 @admin_router.message(IsAdmin(), TaskForm.confirm)
@@ -102,7 +102,7 @@ async def confirm(message: types.Message, state: FSMContext):
 @admin_router.message(Command("start"))
 async def start_cmd_user(message: types.Message):
     await message.answer(f"Привет, {message.from_user.first_name}! У тебя нет прав"
-                         f"администратора.")
+                         f" администратора.")
 
 
 @admin_router.message()
