@@ -28,7 +28,7 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             mkdir -p /root/stazh/nikita1/
 
@@ -37,7 +37,7 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd /root/stazh/nikita1/
             if [ ! -d ".git" ]; then
@@ -51,7 +51,7 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd /root/stazh/nikita1/
             echo "TOKEN=${{ secrets.BOT_TOKEN }}" > .env
